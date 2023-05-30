@@ -106,10 +106,41 @@ const spin = () => {
 
 };
 
+//transposing the reels inorder to present it to the user
+/*eg: [[A B C], [D D D], [A A A]] <- If we get this as the output from reels[] we must get it printed as below(transposing a matrix)
+       [A D A]
+       [B D A]
+       [C D A] */
+const transpose = (reels) => {
+    const rows = [];
+    for(let i=0; i<ROWS; i++){
+        rows.push([]);
+        for(let j=0; j<COLS; j++){
+            rows[i].push(reels[j][i]);
+        }
+    }
 
+    return rows;
+}
 
+//printing the slot machine
+const printRows = (rows) => {
+    for(const row of rows){ //this is iterating by item. which means im accessing the nested array since it is a 2d array. we are going through every single row in our rows, which will give an array 'row' representing the elements in that row
+        let rowString = "";
+        for(const [i,symbol] of row.entries()){ //loop through both the index and the element that exist in the row. eg: ["A", "B", "C"] index - 0 and symbol - A
+            rowString += symbol; 
+            if(i != rows.length - 1){ //decide whether to add the |
+                rowString += " | ";
+            }
+        }
+        console.log(rowString);
+    }
+}
 
 let balance = deposit(); 
 const numberOfLines = getNumberOfLines();
 const bet = getBet(balance, numberOfLines);
 const reels = spin();
+const rows = transpose(reels);
+
+printRows(rows);
